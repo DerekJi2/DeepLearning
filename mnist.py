@@ -1,8 +1,10 @@
+import numpy as np
 import torch
 from torch.utils.data import DataLoader
 import torchvision.datasets as dsets
 import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
+import knn_classify as knn
 
 
 def load_data():
@@ -39,4 +41,24 @@ def draw_image(dataset, index=0):
     plt.imshow(digit, cmap=plt.cm.binary)
     plt.show()
     print(dataset.targets[index])
+    return
+
+
+def knn_on_mnist(train_loader, test_loader):
+    x_train = train_loader.dataset.data.numpy()
+    x_train = x_train.reshape(x_train.shape[0], 28 * 28)
+    y_train = train_loader.dataset.targets.numpy()
+
+    x_test = test_loader.dataset.data[:1000].numpy()
+    x_test = x_test.reshape(x_test.shape[0], 28 * 28)
+    y_test = test_loader.dataset.targets[:1000].numpy()
+
+    num_test = y_test.shape[0]
+
+    y_test_pred = knn.knn_classify(5, 'M', x_train, y_train, y_test)
+    num_correct = np.sum(y_test_pred == y_test)
+
+    accuracy = float(num_correct) / num_test
+
+    print('Got %d / %d correct => accuracy: %f', (num_correct, num_test, accuracy))
     return
