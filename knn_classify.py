@@ -25,49 +25,47 @@ def scatter(matrix, names):
 
 
 def knn_classify(k, dis, X_train, x_train, Y_test):
-    assert dis == 'E' or dis == 'M', 'dis must E or M，E代表欧式距离，M代表曼哈顿距离'
-    num_test = Y_test.shape[0]  # 测试样本的数量
+    assert dis == 'E' or dis == 'M', 'dis must be E or M'
+    num_test = Y_test.shape[0]  # The number of tests
     labelers = []
     '''
-   使用欧式距离公式作为距离度量
+       E: Euler Distance
     '''
     if dis == 'E':
         for i in range(num_test):
-            # 实现欧式距离公式
+            # euler distance
             tile = np.tile(Y_test[i], (X_train.shape[0], 1))
             delta = X_train - tile
             mi = delta ** 2
             _sum = np.sum(mi, axis=1)
             distances = np.sqrt(_sum)
-            nearest_k = np.argsort(distances)  # 距离由小到大进行排序，并返回index值
+            nearest_k = np.argsort(distances)  # ORDER ASC, returns indexes
             topK = nearest_k[:k]
-            # 选取前k个距离
+            # Fetch TOP K
             classCount = {}
-            for i in topK:  # 统计每个类别的个数
+            for i in topK:
                 classCount[x_train[i]] = classCount.get(x_train[i], 0) + 1
             sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
             labelers.append(sortedClassCount[0][0])
         return np.array(labelers)
-    # 使用曼哈顿公式作为距离度量
+    # M: Manhattan Distance
     else:
         for i in range(num_test):
-            # 实现曼哈顿距离公式
+            # Manhattan Distance
             tile = np.tile(Y_test[i], (X_train.shape[0], 1))
             delta = X_train - tile
             mi = np.abs(delta)
             distances = np.sum(mi, axis=1)
-            nearest_k = np.argsort(distances)  # 距离由小到大进行排序，并返回index值
+            nearest_k = np.argsort(distances)
             topK = nearest_k[:k]
-            # 选取前k个距离
+            # Fetch TOP K
             classCount = {}
-            for i in topK:  # 统计每个类别的个数
+            for i in topK:
                 classCount[x_train[i]] = classCount.get(x_train[i], 0) + 1
             sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
             labelers.append(sortedClassCount[0][0])
         return np.array(labelers)
 
-
-# 读者自行补充完成
 
 def test(distance_type):
   print('\r\nDistance Type: ' + distance_type)
@@ -79,5 +77,5 @@ def test(distance_type):
   new_group = np.concatenate((group, new_points))
   new_labels = np.concatenate((labels, y_test_pred))
   scatter(new_group, new_labels)
-  print(y_test_pred)  # 打印输出['A' 'B']，和我们的判断是相同的
+  print(y_test_pred)  # Expecting ['A' 'B']
   return
