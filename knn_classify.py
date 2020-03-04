@@ -51,6 +51,7 @@ def knn_classify(k, dis, X_train, x_train, Y_test):
     # M: Manhattan Distance
     else:
         for i in range(num_test):
+            print('knn_classify(): calculating ', i)
             # Manhattan Distance
             tile = np.tile(Y_test[i], (X_train.shape[0], 1))
             delta = X_train - tile
