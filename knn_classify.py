@@ -51,7 +51,7 @@ def knn_classify(k, dis, X_train, x_train, Y_test):
     # M: Manhattan Distance
     else:
         for i in range(num_test):
-            print('knn_classify(): calculating ', i)
+            print('knn_classify(): calculating ', i+1)
             # Manhattan Distance
             tile = np.tile(Y_test[i], (X_train.shape[0], 1))
             delta = X_train - tile
@@ -66,6 +66,19 @@ def knn_classify(k, dis, X_train, x_train, Y_test):
             sortedClassCount = sorted(classCount.items(), key=operator.itemgetter(1), reverse=True)
             labelers.append(sortedClassCount[0][0])
         return np.array(labelers)
+
+
+def getXmean(x_train):
+    x_train = np.reshape(x_train, (x_train.shape[0], -1))
+    mean_image = np.mean(x_train, axis=0)
+    return mean_image
+
+
+def centralized(x_test, mean_image):
+    x_test = np.reshape(x_test, (x_test.shape[0], -1))
+    x_test = x_test.astype(np.float)
+    x_test -= mean_image
+    return x_test
 
 
 def test(distance_type):
