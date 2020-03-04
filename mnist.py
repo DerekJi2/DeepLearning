@@ -55,7 +55,7 @@ def knn_on_mnist(train_loader, test_loader):
 
     num_test = y_test.shape[0]
 
-    y_test_pred = knn.knn_classify(5, 'M', x_train, y_train, y_test)
+    y_test_pred = knn.knn_classify(5, 'M', x_train, y_train, x_test)
     num_correct = np.sum(y_test_pred == y_test)
 
     accuracy = float(num_correct) / num_test
