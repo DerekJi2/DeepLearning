@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import common
 import knn
 import mnist
 import unary_linear_regression as reg
@@ -14,6 +14,8 @@ import unary_linear_regression as reg
 # mnist.centralized_knn_on_mnist(train_loader, test_loader)
 # mnist.draw_centralized_image(train_dataset, test_dataset, 989)
 
-reg.test()
+# reg.test()
+
+common.show_sigmoid()
 
 print('All done!')
