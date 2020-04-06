@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import create_dataset as cd
-import knn_classify as knn
+import knn
 import mnist
 import unary_linear_regression as reg
 
@@ -15,9 +14,6 @@ import unary_linear_regression as reg
 # mnist.centralized_knn_on_mnist(train_loader, test_loader)
 # mnist.draw_centralized_image(train_dataset, test_dataset, 989)
 
-model = reg.UnaryLinearRegression()
-seeds = reg.sampleSeeds()
-model.fit(seeds[0], seeds[1])
+reg.test()
 
-print(model.predict([7, 8]))
-
+print('All done!')

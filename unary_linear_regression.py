@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import seeds
 
 
-def sampleSeeds():
-    return np.array([
-        [1, 2, 4, 6, 8],
-        [2, 5, 7, 8, 9]
-    ])
+def test():
+    model = UnaryLinearRegression()
+    seed_data = seeds.unary_linear_regression()
+    model.fit(seed_data[0], seed_data[1])
+    print(model.predict([7, 8]))
 
 
 class UnaryLinearRegression(object):
